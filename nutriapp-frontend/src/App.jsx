@@ -13,7 +13,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 pt-24">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
