@@ -26,8 +26,11 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Dashboard', path: '/home' },
-    { name: 'Registro Diario', path: '/calories' },
+    { name: 'Registro', path: '/calories' },
+    { name: 'Historial', path: '/history' },
     { name: 'Recetario', path: '/recipes' },
+    { name: 'Suplementos', path: '/supplements' },
+    { name: '🤖 IA', path: '/ai' },
   ]
 
   return (
@@ -49,9 +52,9 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {user !== null && navLinks.map((link) => {
-            const isActive = location.pathname.includes(link.path)
+            const isActive = location.pathname === link.path
             return (
               <Link 
                 key={link.path} 
@@ -118,9 +121,9 @@ export default function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-xl absolute w-full"
           >
-            <div className="px-6 py-4 flex flex-col gap-4">
+            <div className="px-6 py-4 flex flex-col gap-3">
               {user !== null && navLinks.map((link) => {
-                const isActive = location.pathname.includes(link.path)
+                const isActive = location.pathname === link.path
                 return (
                   <Link 
                     key={link.path} 

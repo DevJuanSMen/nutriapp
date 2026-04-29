@@ -9,10 +9,13 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as dailyLogs from "../dailyLogs.js";
 import type * as http from "../http.js";
 import type * as meals from "../meals.js";
 import type * as profile from "../profile.js";
+import type * as supplements from "../supplements.js";
 import type * as users from "../users.js";
+import type * as waterLogs from "../waterLogs.js";
 
 import type {
   ApiFromModules,
@@ -22,10 +25,13 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  dailyLogs: typeof dailyLogs;
   http: typeof http;
   meals: typeof meals;
   profile: typeof profile;
+  supplements: typeof supplements;
   users: typeof users;
+  waterLogs: typeof waterLogs;
 }>;
 
 /**
