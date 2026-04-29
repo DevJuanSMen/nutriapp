@@ -1,9 +1,21 @@
 import Groq from 'groq-sdk'
 
-const groq = new Groq({
-  apiKey: import.meta.env.VITE_GROQ_API_KEY,
-  dangerouslyAllowBrowser: true,
-})
+const apiKey = import.meta.env.VITE_GROQ_API_KEY
+
+let groq = null
+if (apiKey) {
+  groq = new Groq({
+    apiKey,
+    dangerouslyAllowBrowser: true,
+  })
+}
+
+const checkGroq = () => {
+  if (!groq) {
+    throw new Error('La API Key de Groq no está configurada. Por favor, añádela como VITE_GROQ_API_KEY en las variables de entorno.')
+  }
+}
+
 
 const SYSTEM_PROMPT = `Eres NutriBot, un asistente nutricional experto y amigable. Tu trabajo es:
 - Dar recomendaciones de alimentación saludable personalizadas
@@ -28,6 +40,7 @@ export async function chatWithNutriBot(messages, userContext = null) {
     ? `${SYSTEM_PROMPT}\n\nContexto del usuario:\n${JSON.stringify(userContext, null, 2)}`
     : SYSTEM_PROMPT
 
+  checkGroq()
   const response = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
@@ -52,6 +65,7 @@ export async function analyzeFoodPhoto(base64Image, userContext = null) {
 - Calorías restantes: ${(userContext.targetCalories || 2000) - (userContext.consumedToday || 0)} kcal`
     : ''
 
+  checkGroq()
   const response = await groq.chat.completions.create({
     model: 'meta-llama/llama-4-scout-17b-16e-instruct',
     messages: [
@@ -114,6 +128,7 @@ export async function analyzeFoodPhoto(base64Image, userContext = null) {
  * Generate healthy recipe suggestion
  */
 export async function generateRecipe(preferences = '') {
+  checkGroq()
   const response = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages: [
